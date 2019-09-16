@@ -1,5 +1,5 @@
 ---
-title: Data-joins with Mapbox Boundaries
+title: 数据连接与Mapbox Boundaires
 description: Join data with v2 of the Mapbox Boundaries tileset.
 level: 3
 topics:
@@ -25,27 +25,27 @@ contentType: tutorial
 </Note>
 }}
 
-Mapbox Enterprise users can add global administrative, postal, and statistical boundaries to their maps and data visualizations. This guide covers how to create a data-join using Mapbox Boundaries with Mapbox GL JS to style a choropleth map.
+Mapbox企业用户可以为其地图和数据可视化添加全局管理，邮政和统计边界。本指南介绍了如何使用Mapbox Boundaries和Mapbox GL JS创建数据连接，以便为等值区域地图设计样式。
 
 ![final choropleth map using Boundaries, local data, and expressions](/help/img/data/eb-data-join-final.png)
 
-## Getting started
+## 开始
 
-Mapbox Boundaries are available as a part of an Enterprise plan. If you do not have an Enterprise plan or if you do have an Enterprise plan and would like to add access to Mapbox Boundaries, <a href='https://www.mapbox.com/contact/'>contact a Mapbox sales representative</a> to request access. Access to the Boundaries tilesets are controlled by your Mapbox account access token.
+Mapbox Boundaries 是企业计划的一部分。如果您没有企业计划，或者如果您有企业计划，并想要获取Mapbox边界的访问权限 <a href='https://www.mapbox.com/contact/'>请联系Mapbox销售代表</a> 。对边界图块集的访问权限由您的Mapbox账户访问令牌控制。
 
-## About data-joins
+## 关于数据连接
 
-The data-join technique involves inner joins between your custom local data, such as the unemployment rate by US state, to vector tile features, such as state boundaries in the appropriate Mapbox Boundaries tileset, using data-driven style notation.
+数据连接技术使用数据驱动的样式表示法，将您的自定义本地数据（例如美国各州的失业率）与矢量瓦片要素（例如适当的Mapbox Boundaries图块集中的州边界）之间进行内部连接。
 
-## Create a data-join with Mapbox Boundaries
+## 使用Mapbox Boundaries 创建数据连接
 
-Below you'll use Mapbox GL JS, local data, Mapbox Boundaries, feature state, and data-driven styling with expressions to join local data to a vector tile source and style a choropleth map.
+下面，您将使用Mapbox GL JS，本地数据，Mapbox Boundaries，要素状态和数据驱动样式的表达式把本地数据连接到矢量瓦片源，并为等值区域地图设计样式。
 
-### Create a map with Mapbox GL JS
+###  使用Mapbox GL JS 创建一个地图
 
-Begin by initializing a map with Mapbox GL JS. Make sure the  access token you are using is from **your account with access to Mapbox Boundaries**.
+首先，使用Mapbox GL JS初始化地图，请确保您使用的访问令牌来自您的账户， **该账户需要拥有Mapbox边界的访问权限**。
 
-Here's the starter code for this example:
+这是此示例的初始代码：
 
 ```html
 <!DOCTYPE html>
@@ -93,11 +93,10 @@ Here's the starter code for this example:
 </html>
 ```
 
-### Local data
+### 本地数据
+在本示例中，您将把美国的失业数据连接到admin-1 Boundaries 图块集。在这里，将对象数组设置为一个名为`localData`的变量. 在您自己的应用中，您可以根据喜好将本地数据添加入应用中。
 
-In this example, you'll join unemployment data for the US to the admin-1 Boundaries tileset. Here you'll set the array of objects equal to a variable called `localData`. In your own application, you can pull local data into your application how you'd like.
-
-Here's the data used in this example as a JavaScript variable called `localData` that can be directly added to the HTML file's `script` tags alongside the code used to initialize the map:
+这个示例中用到的数据是一个名为`localData` 的JavaScript变量，此数据可以被直接添加到HTML文件的`script`标签里，与代码一同初始化地图。
 
 ```js
 var localData = [
@@ -154,11 +153,11 @@ var localData = [
 ];
 ```
 
-### Mapbox Boundaries lookup table
+### Mapbox Boundaries查询表
 
-Each Boundaries tileset has its own feature lookup table in which each feature in that tileset is indexed. Lookup tables are designed to be used locally in your application. You can read more about feature lookup tables in the [Get started with Mapbox Boundaries](/help/tutorials/get-started-enterprise-boundaries/#about-feature-lookup-tables) guide.
+每个Boundaries图块集都有自己的要素查询表， 每个要素都能被编入索引。查询表被设计在您的本地应用中使用。您可以在 [Mapbox Boundaries入门](/help/tutorials/get-started-enterprise-boundaries/#about-feature-lookup-tables) 里阅读更多有关要素查询表的信息。
 
-The code snippet below illustrates how to import the feature lookup table from a file hosted in the application, then make the API request when the map loads, retrieve the contents of the lookup table, and print the response in the console. You will need to replace `./path/to/lookup/table` with the path to the appropriate lookup table, available in the reference documentation that is provided with Boundaries access.
+以下的代码片段阐释了如何从应用文件中导入要素查询表，然后在导入地图时发出API请求，检索查询表的内容，并标记控制台的响应。 您需要将`./path/to/lookup/table` 替换为到适当查询表的路径，该路径可在Boundaries访问中提供的参考文件找到。
 
 ```js
 const lookupTable = require('./path/to/lookup/table')
@@ -172,27 +171,27 @@ function createViz(lookupData) {
 }
 ```
 
-Explore the response in the console to learn more about what is included in the lookup tables and better understand how you'll be using it in the next step.
+在控制台探索响应，以了解更多有关查询表中包含的内容，并更好地了解在下一步中您将要怎样运用它。
 
-### Feature state
+### 要素特征
 
-**Feature state** is a set of attributes that can be dynamically assigned to a feature on the map. The [Mapbox GL JS feature state](https://www.mapbox.com/mapbox-gl-js/api/#map#setfeaturestate) API can be used to dynamically style the features of a vector or GeoJSON source, enabling new ways to handle map interactivity, data joins, and time series animations.
+**要素特征** 是一组可以动态地分配给地图上的要素的属性。[Mapbox GL JS 要素特征](https://www.mapbox.com/mapbox-gl-js/api/#map#setfeaturestate) API  可用于对矢量或GeoJSON源的要素进行动态样式化，从而实现处理地图交互，数据连接，和时间序列动画效果的方法。
 
-Building on the `createViz` function that was defined in the previous step, add the Mapbox Boundaries admin-1 tileset as a source named `statesData`.
+在前面步骤中定义的 `createViz` 函数的基础上, 将 Mapbox Boundaries admin-1 图块集添加为名为 `statesData`的源。
 
 {{
 <Note
   imageComponent={<BookImage />}
 >
-  <p>Find the complete list of Mapbox Boundaries tilesets in the <a href="https://www.mapbox.com/vector-tiles/enterprise-boundaries-v2">reference documentation</a>.</p>
+  <p>您可以在 <a href="https://www.mapbox.com/vector-tiles/enterprise-boundaries-v2">参考文件</a> 中找到完整的Mapbox Boundaries 图块集列表.</p>
 </Note>
 }}
 
-Then, create a new function called `setStates` within `createViz` to set the feature state. To join the local unemployment data to the vector tile boundary data, you'll need a property that can be used to match like features between the local and vector data. In the Boundaries feature lookup table, the information for each US state is in an object identified with a unique string using the following convention: `US` (for the United States) + `A1` (for Admin 1) + some number (unique for each state). In the _local data_, each state is represented with only a number. But this number corresponds with the numbers in the feature lookup table, so you can join the JSON unemployment data with the corresponding vector features where the object's identifier === `USA1` + `STATE_ID`.
+然后，在 `createViz` 里创建一个名为`setStates`的新函数来设置要素特征. 要将本地失业数据连接到矢量瓦片边界数据，您需要一个可用于匹配本地数据和矢量数据之间相似特征的属性。 在Boundaries要素查询列表中，每个美国州的信息都被用一组唯一的字符串表示： `US` (表示美国) + `A1` (表示 Admin 1) + 某个数字(表示某个州)。在本地数据中，每个州都用一个数字表示。 这个数字与特征查询列表里的数字一一对应，所以可以将JSON失业数据与对应（对象标识符 === `USA1` + `STATE_ID`）的矢量要素相连接.
 
-Feature state requires knowing the `id` for each vector feature. This unique identifier must consist of only integers. In the Mapbox Boundaries lookup tables, `id_int` is this unique integer-only identifier. To get the vector tile feature `id` to set the feature state, you end up with `id: dataValues["USA1" + row["STATE_ID"]].id_int` to find the object in the `dataValues` from the lookup table with the identifier equal to `"USA1" + row["STATE_ID"]` and then getting the value of the `id_int` property.
+要素特征要获知每个矢量要素的 `id`。 此唯一的标识符必须仅包含整数。 在Mapbox Boundaries查询表中， `id_int` 是唯一的整数标识符。 要获取矢量瓦片要素`id` 以设置特征状态，您最终会得到 `id: dataValues["USA1" + row["STATE_ID"]].id_int`从查询列表中寻 `dataValues` 中的对象，其标识符等于 `"USA1" + row["STATE_ID"]` 然后得到 `id_int`属性的值.
 
-Finally, you'll wait until the `statesData` source has been added to the map before calling your custom `setState` function to set the feature state.
+最后，在调用自定义 `setState` 函数来设置特征状态前，您将要等待直到 `statesData` 源已经被添加到地图。
 
 ```js
 function createViz(lookupData) {
@@ -229,29 +228,27 @@ function createViz(lookupData) {
 }
 ```
 
-### Data-driven styling with expressions
+### 数据驱动样式表达式
 
-Now that the local data and the vector data in the Mapbox Boundaries tileset have been joined, you can style the features in the Boundaries tileset according to the unemployment value from your local data. Inside the `createViz` function, add a new layer using `map.addLayer()`. The source will be `statesData` (added in the previous step), and the `source-layer` will be `boundaries_admin_1`.
+现在已经连接了Mapbox Boundaries图块集里的本地数据和矢量数据，您可以根据本地失业数据的值，在Boundaries图块集里设置要素的样式。在 `createViz` 函数中，添加一个新的名为 `map.addLayer()`的图层。源将是 `statesData` (已在之前的步骤中添加), 并且 `source-layer` 将是 `boundaries_admin_1`.
 
-You can use expressions to set the fill color of each feature according to the unemployment value found in the feature state. Mapbox GL JS expressions uses a Lisp-like syntax, represented using JSON arrays. Expressions follow this format:
-
+您可以使用表达式，根据要素特征中失业数据的值，来设置每个要素的填充色。Mapbox GL JS表达式使用类似Lisp的语法，使用JSON数组表示。表达式遵循以下格式：
 ```
 [expression_name, argument_0, argument_1, ...]
 ```
 
-The `expression_name` is the **expression operator**, for example, you would use [`'*'`](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-*) to multiply two arguments or [`'case'`](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-case) to create conditional logic. For a complete list of all available expressions see the [Mapbox Style Specification](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions).
+`expression_name` 是 **表达式运算符**, 例如，您可以使用 [`'*'`](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-*)乘以两个参数，或使用 [`'case'`](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-case)来创建条件逻辑。 有关所有可用表达式的完整列表，请参阅[Mapbox样式规范](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions).
 
-The **arguments** are either _literal_ (numbers, strings, or boolean values) or else themselves expressions. The number of arguments varies based on the expression.
+ **参数** 可以是文字（数字，字符串或布尔值），也可以是自身表达式。 参数的数量因表达式而异。
 
-In this example, you'll use a combination of expressions to style the data as a choropleth map:
+在此例中，您将要使用混合的表达式来设置等值区域地图的数据。
 
-- [`case`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-case): Use the `case` expression to (1) check if the unemployment feature state property is not null, (2) if unemployment is not null, you'll assign the fill color according to the value of unemployment, (3) if it is null, you'll assign a fill color of `rgba(255, 255, 255, 0)`.
-- [`feature-state`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-feature-state): Use the `feature-state` expression to retrieve the value of the unemployment property in the current feature's state.
-- [`!=`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-!=): Use the `!=` expression to check if the feature state unemployment property is not equal to null.
-- [`interpolate`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-interpolate): Use the `interpolate` expression to assign a fill color to two different values of unemployment and infer a continuous, smooth set of fill colors between the stops.
+- [`case`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-case):  使用 `case` 表达式（1）检查失业特征状态属性是否为空，（2）如果失业不为空，则根据失业价值分配填充颜色，（3）如果为空， 您将指定一个填充色rgba `rgba(255, 255, 255, 0)`.
+- [`feature-state`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-feature-state): 使用 `feature-state` 表达式检索当前要素状态中失业属性的值。
+- [`!=`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-!=): 使用 `!=` 表达式检查要素状态失业属性是否不为空。
+- [`interpolate`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-interpolate): 使用 `interpolate` 表达式将填充颜色分配给两个不同的失业值，并推断出站点之间连续的、平滑的填充颜色集。
 
-When you put all these expressions together, your code will look like this:
-
+当您把所有表达式放在一起，您的代码将如下所示：
 ```js
 map.addLayer({
   id: 'states-join',
@@ -269,13 +266,13 @@ map.addLayer({
 }, 'waterway-label');
 ```
 
-## Final product
+## 最终成果
 
-You created a choropleth map using data-joins and Mapbox Boundaries.
+您用数据连接和Mapbox Boundaries创建了一个等值区域地图。
 
 ![final choropleth map using Boundaries, local data, and expressions](/help/img/data/eb-data-join-final.png)
 
-Here's the full code:
+这是完整的代码：
 
 ```html
 <!DOCTYPE html>
@@ -427,11 +424,11 @@ Here's the full code:
 </html>
 ```
 
-## Next steps
+## 下一步
 
-Learn more about how you can use Mapbox Boundaries.
+了解更多如何使用Mapbox Boundaries
 
-### More Mapbox Boundaries tutorials
+### 更多Mapbox Boundaries 教程
 
 Explore our other Mapbox Boundaries tutorials:
 
