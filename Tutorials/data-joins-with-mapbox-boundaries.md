@@ -437,6 +437,6 @@ map.addLayer({
 
 ### 高级用例
 
-Y您还可以探索此 [示例](https://www.mapbox.com/labs-sandbox-demos/vt_polygons/), 该示例使用了本地数据连接教程和 [点对面查询](/help/tutorials/point-in-polygon-query-with-enterprise-boundaries/) 教程中概述的概念，创建了一个具有交互式等值区域地图的应用程序。
+您还可以探索此 [示例](https://www.mapbox.com/labs-sandbox-demos/vt_polygons/), 该示例使用了本地数据连接教程和 [点对面查询](/help/tutorials/point-in-polygon-query-with-enterprise-boundaries/) 教程中概述的概念，创建了一个具有交互式等值区域地图的应用程序。
 
 ![an end to end example using the data-join technique and Tilequery API](/help/img/data/enterprise-boundaries-choropleth-demo.gif)
