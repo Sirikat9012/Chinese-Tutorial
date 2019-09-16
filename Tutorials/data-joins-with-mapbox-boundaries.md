@@ -430,13 +430,13 @@ map.addLayer({
 
 ### 更多Mapbox Boundaries 教程
 
-Explore our other Mapbox Boundaries tutorials:
+探索我们的其他Mapbox Boundaries教程
 
-- [Point-in-polygon query with Mapbox Boundaries](/help/tutorials/point-in-polygon-query-with-enterprise-boundaries/): Determine what polygons exist at a single point using the Mapbox Tilequery API.
-- [Extend Mapbox Boundaries](/help/tutorials/extend-enterprise-boundaries/): You can extend Mapbox Boundaries with any custom data you need for your application. This could mean adding school district, city, market, or property boundaries to your application &mdash; all with the same performance and API features of the native product.
+- [使用 Mapbox Boundaries点对面查询](/help/tutorials/point-in-polygon-query-with-enterprise-boundaries/): 使用 Mapbox Boundaries Tilequery API计算单个点上存在的面。
+- [扩展 Mapbox Boundaries ](/help/tutorials/extend-enterprise-boundaries/): 您可以使用应用程序所需的任何自定义数据扩展mapbox boundaries。这可能意味着添加学校区域，城市，市场，或者所有权边界到您的应用程序中，都具有与原产品相同的性能和API特性。
 
-### Advanced use cases
+### 高级用例
 
-You can also explore this [example](https://www.mapbox.com/labs-sandbox-demos/vt_polygons/), which uses the concepts outlined in both this data-join tutorial and the [Point-in-polygon query](/help/tutorials/point-in-polygon-query-with-enterprise-boundaries/) tutorial to create an application that features an interactive choropleth map.
+Y您还可以探索此 [示例](https://www.mapbox.com/labs-sandbox-demos/vt_polygons/), 该示例使用了本地数据连接教程和 [点对面查询](/help/tutorials/point-in-polygon-query-with-enterprise-boundaries/) 教程中概述的概念，创建了一个具有交互式等值区域地图的应用程序。
 
 ![an end to end example using the data-join technique and Tilequery API](/help/img/data/enterprise-boundaries-choropleth-demo.gif)
