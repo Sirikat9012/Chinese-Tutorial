@@ -35,7 +35,7 @@ Mapbox Boundaries 是企业计划的一部分。如果您没有企业计划，�
 
 ## 关于数据连接
 
-数据连接技术使用数据驱动的样式表示法，将您的自定义本地数据（例如美国各州的失业率）与矢量瓦片要素（例如适当的Mapbox Boundaries图块集中的州边界）之间进行内部连接。
+数据连接技术使用数据驱动的样式表示法，将您的自定义本地数据（例如美国各州的失业率）与矢量瓦片要素（例如相应的Mapbox Boundaries图块集中的州边界）之间进行内部连接。
 
 ## 使用Mapbox Boundaries 创建数据连接
 
@@ -94,7 +94,7 @@ Mapbox Boundaries 是企业计划的一部分。如果您没有企业计划，�
 ```
 
 ### 本地数据
-在本示例中，您将把美国的失业数据连接到admin-1 Boundaries 图块集。在这里，将对象数组设置为一个名为`localData`的变量. 在您自己的应用中，您可以根据喜好将本地数据添加入应用中。
+在本示例中，您将把美国的失业数据连接到admin-1 Boundaries 图块集。在这里，您需要将对象数组设置成一个名为`localData`的变量. 在您自己的应用中，您可以根据喜好将本地数据添加入应用中。
 
 这个示例中用到的数据是一个名为`localData` 的JavaScript变量，此数据可以被直接添加到HTML文件的`script`标签里，与代码一同初始化地图。
 
@@ -155,9 +155,9 @@ var localData = [
 
 ### Mapbox Boundaries查询表
 
-每个Boundaries图块集都有自己的要素查询表， 每个要素都能被编入索引。查询表被设计在您的本地应用中使用。您可以在 [Mapbox Boundaries入门](/help/tutorials/get-started-enterprise-boundaries/#about-feature-lookup-tables) 里阅读更多有关要素查询表的信息。
+每个Boundaries图块集都有自己的要素查询表，在此表中，每个图块集中的要素都能被编入索引。查询表被设计在您的本地应用中使用。您可以在 [Mapbox Boundaries入门](/help/tutorials/get-started-enterprise-boundaries/#about-feature-lookup-tables) 里阅读更多有关要素查询表的信息。
 
-以下的代码片段阐释了如何从应用文件中导入要素查询表，然后在导入地图时发出API请求，检索查询表的内容，并标记控制台的响应。 您需要将`./path/to/lookup/table` 替换为到适当查询表的路径，该路径可在Boundaries访问中提供的参考文件找到。
+以下的代码片段阐释了如何从应用文件中导入要素查询表，然后在导入地图时发出API请求，检索查询表的内容，并标记控制台的响应。 您需要将`./path/to/lookup/table` 替换为到相应查询表的路径，该路径可在Boundaries访问中提供的参考文件内找到。
 
 ```js
 const lookupTable = require('./path/to/lookup/table')
@@ -175,9 +175,9 @@ function createViz(lookupData) {
 
 ### 要素特征
 
-**要素特征** 是一组可以动态地分配给地图上的要素的属性。[Mapbox GL JS 要素特征](https://www.mapbox.com/mapbox-gl-js/api/#map#setfeaturestate) API  可用于对矢量或GeoJSON源的要素进行动态样式化，从而实现处理地图交互，数据连接，和时间序列动画效果的方法。
+**要素特征** 是一组可以动态分配给地图上的要素的属性。[Mapbox GL JS 要素特征](https://www.mapbox.com/mapbox-gl-js/api/#map#setfeaturestate) API可用于对矢量或GeoJSON源的要素进行动态样式化，从而实现处理地图交互，数据连接，和时间序列动画的效果。
 
-在前面步骤中定义的 `createViz` 函数的基础上, 将 Mapbox Boundaries admin-1 图块集添加为名为 `statesData`的源。
+在前面步骤中定义的 `createViz` 函数的基础上, 将 Mapbox Boundaries admin-1 图块集添加为源，命名为`statesData`。
 
 {{
 <Note
@@ -187,11 +187,11 @@ function createViz(lookupData) {
 </Note>
 }}
 
-然后，在 `createViz` 里创建一个名为`setStates`的新函数来设置要素特征. 要将本地失业数据连接到矢量瓦片边界数据，您需要一个可用于匹配本地数据和矢量数据之间相似特征的属性。 在Boundaries要素查询列表中，每个美国州的信息都被用一组唯一的字符串表示： `US` (表示美国) + `A1` (表示 Admin 1) + 某个数字(表示某个州)。在本地数据中，每个州都用一个数字表示。 这个数字与特征查询列表里的数字一一对应，所以可以将JSON失业数据与对应（对象标识符 === `USA1` + `STATE_ID`）的矢量要素相连接.
+然后，在 `createViz` 里创建一个名为`setStates`的新函数来设置要素特征. 要将本地失业数据连接到矢量瓦片边界数据，您需要一个可用于匹配本地数据和矢量数据之间相似特征的属性。在Boundaries要素查询列表中，美国各个州的信息都被用一组唯一的字符串表示： `US` (表示美国) + `A1` (表示 Admin 1) + 某个数字(表示某个州)。在本地数据中，每个州都用一个数字表示。这个数字与特征查询列表里的数字一一对应，所以可以将JSON失业数据与对应（对象标识符 === `USA1` + `STATE_ID`）的矢量要素相连接.
 
-要素特征要获知每个矢量要素的 `id`。 此唯一的标识符必须仅包含整数。 在Mapbox Boundaries查询表中， `id_int` 是唯一的整数标识符。 要获取矢量瓦片要素`id` 以设置特征状态，您最终会得到 `id: dataValues["USA1" + row["STATE_ID"]].id_int`从查询列表中寻 `dataValues` 中的对象，其标识符等于 `"USA1" + row["STATE_ID"]` 然后得到 `id_int`属性的值.
+要素特征要求知道每个矢量要素的 `id`。此唯一的标识符必须仅包含整数。在Mapbox Boundaries查询表中， `id_int` 是唯一的整数标识符。 要获取矢量瓦片要素`id` 以设置特征状态，您最终会得到 `id: dataValues["USA1" + row["STATE_ID"]].id_int`从查询列表中寻找 `dataValues` 中的对象，使其标识符等于 `"USA1" + row["STATE_ID"]`，然后得到 `id_int`属性的值。
 
-最后，在调用自定义 `setState` 函数来设置要素特征前，您将要等待直到 `statesData` 源已经被添加到地图。
+最终，待 `statesData` 源被添加到地图上之后，您就可以调用自定义 `setState` 函数来设置要素特征。
 
 ```js
 function createViz(lookupData) {
@@ -230,23 +230,23 @@ function createViz(lookupData) {
 
 ### 数据驱动样式表达式
 
-现在已经连接了Mapbox Boundaries图块集里的本地数据和矢量数据，您可以根据本地失业数据的值，在Boundaries图块集里设置要素的样式。在 `createViz` 函数中，添加一个新的名为 `map.addLayer()`的图层。源将是 `statesData` (已在之前的步骤中添加), 并且 `source-layer` 将是 `boundaries_admin_1`.
+既然您已经连接了Mapbox Boundaries图块集里的本地数据和矢量数据，就可以根据本地失业数据的值，在Boundaries图块集里设置要素的样式。在 `createViz` 函数中，用 `map.addLayer()`添加一个新的图层。源是 `statesData` (已在之前的步骤中添加), 并且 `source-layer` 将是 `boundaries_admin_1`.
 
 您可以使用表达式，根据要素特征中失业数据的值，来设置每个要素的填充色。Mapbox GL JS表达式使用类似Lisp的语法，使用JSON数组表示。表达式遵循以下格式：
 ```
 [expression_name, argument_0, argument_1, ...]
 ```
 
-`expression_name` 是 **表达式运算符**, 例如，您可以使用 [`'*'`](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-*)乘以两个参数，或使用 [`'case'`](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-case)来创建条件逻辑。 有关所有可用表达式的完整列表，请参阅[Mapbox样式规范](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions).
+`expression_name` 是 **表达式运算符**，例如，您可以使用 [`'*'`](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-*)乘以两个参数，或使用 [`'case'`](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-case)来创建条件逻辑。 有关所有可用表达式的完整列表，请参阅[Mapbox样式规范](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions).
 
  **参数** 可以是文字（数字，字符串或布尔值），也可以是自身表达式。 参数的数量因表达式而异。
 
-在此例中，您将要使用混合的表达式来设置等值区域地图的数据。
+在此例中，您将要使用混合的表达式来将地图数据的样式设置成等值区域地图。
 
-- [`case`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-case):  使用 `case` 表达式（1）检查失业特征状态属性是否为空，（2）如果失业不为空，则根据失业价值分配填充颜色，（3）如果为空， 您将指定一个填充色rgba `rgba(255, 255, 255, 0)`.
+- [`case`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-case):  使用 `case` 表达式（1）检查失业特征状态属性是否为空，（2）如果失业不为空，则根据失业价值分配填充颜色，（3）如果为空， 您将指定一个填充色 `rgba(255, 255, 255, 0)`.
 - [`feature-state`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-feature-state): 使用 `feature-state` 表达式检索当前要素状态中失业属性的值。
 - [`!=`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-!=): 使用 `!=` 表达式检查要素状态失业属性是否不为空。
-- [`interpolate`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-interpolate): 使用 `interpolate` 表达式将填充颜色分配给两个不同的失业值，并推断出站点之间连续的、平滑的填充颜色集。
+- [`interpolate`](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-interpolate): 使用 `interpolate` 表达式将填充颜色分配给两个不同的失业值，并推断出两点之间连续的、平滑的填充颜色集。
 
 当您把所有表达式放在一起，您的代码将如下所示：
 ```js
@@ -272,7 +272,7 @@ map.addLayer({
 
 ![final choropleth map using Boundaries, local data, and expressions](/help/img/data/eb-data-join-final.png)
 
-这是完整的代码：
+以下是完整的代码：
 
 ```html
 <!DOCTYPE html>
@@ -426,17 +426,17 @@ map.addLayer({
 
 ## 下一步
 
-了解更多如何使用Mapbox Boundaries
+了解更多有关如何使用Mapbox Boundaries。
 
 ### 更多Mapbox Boundaries 教程
 
 探索我们的其他Mapbox Boundaries教程
 
 - [使用 Mapbox Boundaries点对面查询](/help/tutorials/point-in-polygon-query-with-enterprise-boundaries/): 使用 Mapbox Boundaries Tilequery API计算单个点上存在的面。
-- [扩展 Mapbox Boundaries ](/help/tutorials/extend-enterprise-boundaries/): 您可以使用应用程序所需的任何自定义数据扩展mapbox boundaries。这可能意味着添加学校区域，城市，市场，或者所有权边界到您的应用程序中，都具有与原产品相同的性能和API特性。
+- [扩展 Mapbox Boundaries ](/help/tutorials/extend-enterprise-boundaries/): 您可以使用应用程序所需的任何自定义数据扩展mapbox boundaries。这意味着可以将学校区域，城市，市场，或者所有权边界添加到您的应用程序中，它们都具有与原产品相同的性能和API特性。
 
 ### 高级用例
 
-您还可以探索此 [示例](https://www.mapbox.com/labs-sandbox-demos/vt_polygons/), 该示例使用了本地数据连接教程和 [点对面查询](/help/tutorials/point-in-polygon-query-with-enterprise-boundaries/) 教程中概述的概念，创建了一个具有交互式等值区域地图的应用程序。
+您还可以探索此 [示例](https://www.mapbox.com/labs-sandbox-demos/vt_polygons/), 该示例使用了该本地数据连接教程和 [点对面查询](/help/tutorials/point-in-polygon-query-with-enterprise-boundaries/) 教程中概述的概念，创建了一个具有交互式等值区域地图的应用程序。
 
 ![an end to end example using the data-join technique and Tilequery API](/help/img/data/enterprise-boundaries-choropleth-demo.gif)
