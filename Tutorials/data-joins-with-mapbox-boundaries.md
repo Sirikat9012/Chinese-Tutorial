@@ -191,7 +191,7 @@ function createViz(lookupData) {
 
 要素特征要获知每个矢量要素的 `id`。 此唯一的标识符必须仅包含整数。 在Mapbox Boundaries查询表中， `id_int` 是唯一的整数标识符。 要获取矢量瓦片要素`id` 以设置特征状态，您最终会得到 `id: dataValues["USA1" + row["STATE_ID"]].id_int`从查询列表中寻 `dataValues` 中的对象，其标识符等于 `"USA1" + row["STATE_ID"]` 然后得到 `id_int`属性的值.
 
-最后，在调用自定义 `setState` 函数来设置特征状态前，您将要等待直到 `statesData` 源已经被添加到地图。
+最后，在调用自定义 `setState` 函数来设置要素特征前，您将要等待直到 `statesData` 源已经被添加到地图。
 
 ```js
 function createViz(lookupData) {
